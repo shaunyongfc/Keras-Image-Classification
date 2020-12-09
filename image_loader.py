@@ -17,31 +17,46 @@ def generate_entry(image_path, category):
     if category (string) is given.
     """
     image = Image.open(image_path)
-    if category == '':
-        return pd.Series([np.asarray(image) / 255.0], index=['image'])
-    else:
-        return pd.Series([np.asarray(image) / 255.0, CATEGORIES.index(category)], index=['image', 'category'])
+    image = image.resize((150, 150))
+    return np.array(image) / 255.0, CATEGORIES.index(category)
 
-def get_images(folder_path, category=''):
+def get_images(folder_path):
     """
     Given folder path, return a pandas dataframe of image data.
     """
-    path_list = glob.glob(os.path.join(folder_path, category, '*.jpg'))
-    image_series = []
-    for image_path in path_list:
-        image_series.append(generate_entry(image_path, category))
-    return pd.concat(image_series, axis=1).T
+    image_X = []
+    image_y = []
+    for cat in CATEGORIES:
+        path_list = glob.glob(os.path.join(folder_path, cat, '*.jpg'))
+        for image_path in path_list:
+            image_array, category_int = generate_entry(image_path, cat)
+            image_X.append(image_array)
+            image_y.append(category_int)
+    X = np.stack(image_X)
+    y = np.array(image_y)
+    rng_state = np.random.get_state()
+    np.random.shuffle(X)
+    np.random.set_state(rng_state)
+    np.random.shuffle(y)
+    return X, y
 
 def get_images_train():
     """
     Get all image data of the training set.
     """
-    all_images = pd.concat([get_images(PATH_TRAIN, a) for a in CATEGORIES])
-    return all_images.sample(frac=1)
+    return get_images(PATH_TRAIN)
 
 def get_images_test():
     """
     Get all image data of the test set.
     """
-    all_images = pd.concat([get_images(PATH_TEST, a) for a in CATEGORIES])
-    return all_images.sample(frac=1)
+    return get_images(PATH_TEST)
+
+def get_pred_image(number):
+    """
+    Get image data from a numbered file in the pred folder.
+    """
+    image_path = os.path.join(PATH_PRED, str(number) + '.jpg')
+    image = Image.open(image_path)
+    image = image.resize((150, 150))
+    return np.expand_dims((np.array(image) / 255.0), axis=0)

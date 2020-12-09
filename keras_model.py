@@ -8,6 +8,9 @@ from keras.optimizers import Adam
 from parameters import *
 
 def create_model():
+    """
+    Create the neural network model.
+    """
     inputs = Input(shape=INPUT_SHAPE)
     # First convolutional layer
     x = Conv2D(16, (3, 3), padding="same")(inputs)
@@ -16,7 +19,13 @@ def create_model():
     x = MaxPooling2D(pool_size=(3, 3))(x)
     x = Dropout(0.25)(x)
     # Second convolutional layer
-    x = Conv2D(16, (3, 3), padding="same")(inputs)
+    x = Conv2D(32, (3, 3), padding="same")(inputs)
+    x = Activation("relu")(x)
+    x = BatchNormalization(axis=-1)(x)
+    x = MaxPooling2D(pool_size=(3, 3))(x)
+    x = Dropout(0.25)(x)
+    # Third convolutional layer
+    x = Conv2D(32, (3, 3), padding="same")(inputs)
     x = Activation("relu")(x)
     x = BatchNormalization(axis=-1)(x)
     x = MaxPooling2D(pool_size=(3, 3))(x)
