@@ -23,3 +23,11 @@ def get_images(folder_path, category=''):
     for image_path in path_list:
         image_series.append(generate_entry(image_path, category))
     return pd.concat(image_series, axis=1).T
+
+def get_images_train():
+    all_images = pd.concat([get_images(PATH_TRAIN, a) for a in CATEGORIES])
+    return all_images.sample(frac=1)
+
+def get_images_test():
+    all_images = pd.concat([get_images(PATH_TEST, a) for a in CATEGORIES])
+    return all_images.sample(frac=1)
