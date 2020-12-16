@@ -1,0 +1,4 @@
+INPUT_SHAPE = (150, 150, 3)
+INIT_LR = 1e-3
+BS = 32
+EPOCHS = 10
