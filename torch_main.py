@@ -7,6 +7,7 @@ from parameters import *
 import image_loader
 import torch_model
 
+# Define category names
 CATEGORIES = ['buildings', 'forest', 'glacier', 'mountain', 'sea', 'street']
 
 class ImageClassMain():
@@ -15,10 +16,12 @@ class ImageClassMain():
         Main function that makes use of written functions in other files.
         """
         device = torch.device('cpu')
+        # create model and define paremeters
         net = torch_model.ImageClassTorch().to(device)
         opt = optim.Adam(
             net.parameters(),lr=INIT_LR,weight_decay=INIT_LR / EPOCHS)
         celoss = nn.CrossEntropyLoss()
+        # prepare data
         X_train, y_train = image_loader.get_images_train()
         X_train = X_train.transpose(0, 3, 1, 2)
         X_train = torch.from_numpy(X_train).float()
@@ -35,6 +38,7 @@ class ImageClassMain():
         for i, j in enumerate(y_val):
             valset.append([X_val[i], j])
         val_loader = torch.utils.data.DataLoader(valset, batch_size=BS)
+        # train model
         for epoch in range(EPOCHS):
             net.train()
             running_loss = 0

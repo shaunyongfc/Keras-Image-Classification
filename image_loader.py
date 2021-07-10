@@ -5,6 +5,7 @@ from os.path import join
 import glob
 from PIL import Image
 
+# Define constants to be used in the following functions
 CATEGORIES = ['buildings', 'forest', 'glacier', 'mountain', 'sea', 'street']
 PATH_PRED = join(os.getcwd(), 'dataset/seg_pred/seg_pred/')
 PATH_TEST = join(os.getcwd(), 'dataset/seg_test/seg_test/')

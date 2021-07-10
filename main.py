@@ -1,3 +1,5 @@
+# A copy of the jupyter notebook main.ipynb in executable python file
+
 import numpy as np
 import pandas as pd
 from keras.utils import to_categorical
@@ -5,6 +7,7 @@ from parameters import *
 import image_loader
 import keras_model
 
+# Define category names
 CATEGORIES = ['buildings', 'forest', 'glacier', 'mountain', 'sea', 'street']
 
 class ImageClass():
