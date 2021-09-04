@@ -1,11 +1,12 @@
 import numpy as np
 import pandas as pd
-from keras.models import Model
-from keras.layers.normalization import BatchNormalization
-from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.layers import Input, Dense, Dropout, Flatten, Activation
-from keras.optimizers import Adam
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import BatchNormalization, Conv2D, MaxPool2D
+from tensorflow.keras.layers import Input, Dense, Dropout, Flatten, Activation
+from tensorflow.keras.optimizers import Adam
+
 from parameters import *
+
 
 def create_model():
     """
@@ -16,19 +17,19 @@ def create_model():
     x = Conv2D(16, (3, 3), padding="same")(inputs)
     x = Activation("relu")(x)
     x = BatchNormalization(axis=-1)(x)
-    x = MaxPooling2D(pool_size=(3, 3))(x)
+    x = MaxPool2D(pool_size=(3, 3))(x)
     x = Dropout(0.25)(x)
     # Second convolutional layer
     x = Conv2D(32, (3, 3), padding="same")(inputs)
     x = Activation("relu")(x)
     x = BatchNormalization(axis=-1)(x)
-    x = MaxPooling2D(pool_size=(3, 3))(x)
+    x = MaxPool2D(pool_size=(3, 3))(x)
     x = Dropout(0.25)(x)
     # Third convolutional layer
     x = Conv2D(32, (3, 3), padding="same")(inputs)
     x = Activation("relu")(x)
     x = BatchNormalization(axis=-1)(x)
-    x = MaxPooling2D(pool_size=(3, 3))(x)
+    x = MaxPool2D(pool_size=(3, 3))(x)
     x = Dropout(0.25)(x)
     # First fully connected layer
     x = Flatten()(x)

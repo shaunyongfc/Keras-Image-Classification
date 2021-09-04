@@ -3,12 +3,14 @@ import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
+
 from parameters import *
 import image_loader
 import torch_model
 
 # Define category names
 CATEGORIES = ['buildings', 'forest', 'glacier', 'mountain', 'sea', 'street']
+
 
 class ImageClassMain():
     def __init__(self):
@@ -67,6 +69,7 @@ class ImageClassMain():
                 print("Epoch: %2d, Validation Loss: %.3f, Accuracy: %.3f"
                       % (epoch + 1, test_loss / len(val_loader), correct_pred / len(X_val)))
         self.net = net
+
     def image_predict(self, number):
         """
         Predict a category from a numbered file in the pred folder.
@@ -78,6 +81,7 @@ class ImageClassMain():
         output = self.net(X_pred)
         y_pred = output.argmax(dim=1, keepdim=True)
         return CATEGORIES[y_pred]
+
 
 if __name__ == '__main__':
     image_class = ImageClassMain()

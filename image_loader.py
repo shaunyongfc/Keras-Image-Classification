@@ -11,6 +11,7 @@ PATH_PRED = join(os.getcwd(), 'dataset/seg_pred/seg_pred/')
 PATH_TEST = join(os.getcwd(), 'dataset/seg_test/seg_test/')
 PATH_TRAIN = join(os.getcwd(), 'dataset/seg_train/seg_train/')
 
+
 def generate_entry(image_path, category):
     """
     Given file path and of an image, return a pandas series of a numpy array of
@@ -20,6 +21,7 @@ def generate_entry(image_path, category):
     image = Image.open(image_path)
     image = image.resize((150, 150))
     return np.array(image) / 255.0, CATEGORIES.index(category)
+
 
 def get_images(folder_path):
     """
@@ -41,17 +43,20 @@ def get_images(folder_path):
     np.random.shuffle(y)
     return X, y
 
+
 def get_images_train():
     """
     Get all image data of the training set.
     """
     return get_images(PATH_TRAIN)
 
+
 def get_images_test():
     """
     Get all image data of the test set.
     """
     return get_images(PATH_TEST)
+
 
 def get_pred_image(number):
     """

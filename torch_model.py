@@ -2,8 +2,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class ImageClassTorch(nn.Module):
     def __init__(self):
+        """
+        Create the neural network model.
+        """
         super(ImageClassTorch, self).__init__()
         self.model = nn.Sequential(
             # First convolutional layer
@@ -33,5 +37,9 @@ class ImageClassTorch(nn.Module):
             # Final fully connected layer
             nn.Linear(100, 6)
         )
+        
     def forward(self, x):
+        """
+        Compute output tensors from input x.
+        """
         return self.model(x)
